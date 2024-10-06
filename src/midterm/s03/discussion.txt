@@ -1,0 +1,255 @@
+[Recursive Algo]
+recursive algorithm
+    - an approach where the function calls itself to solve smaller instances of problems
+        - it refers to a specific version of case of the problem being solved.
+
+recurrence equations
+    - recurrences or recurrence relations
+    - is a mathematical expression that describe the performance or behavior of a recursive algo in terms of the time it takes to solve a problem based on the size of the input.
+
+    -- size of the inputs
+    -- how many recursive calls
+        -- A recurrence equation represents how the runtime of the algo grows the size of the input increases
+            T(n) T values for smaller inputs
+recurrence relation
+    - it refers to an equation that defines a sequence of values in terms of previous terms in sequence'
+
+    -- substitution method
+    -- master theorem
+    -- recursion tree method
+
+-- recursive factorial function
+    T(n) = T(n - 1) + O(1)
+    >> this means that to computer the factorial n, we compute the factorial n-1 and add a constant amount of work (multiplying b n)
+        base case:
+            T(1) - O(1)
+            - T(1) - base case
+                - the smallest problem size is T(1) and it take constant time O(1) to computer
+            - recursive case
+                - the algo makes a recursive call to solve the problem size n-1, plus a constant amount or work
+    - example (merge sort)
+        - the problem is divided into two sub-problems
+            - size n/2, O(n)
+            -- master theorem
+                T(n) = aT(n/b) + O(n^d)
+                T(n) = 2T(n/2) + O(n)
+                    a = 2
+                    b = 2
+                    d = 1
+
+                    logb(a) = log2(2) = 1
+                           if logb(a) = 1
+                           T(n) = O(n log n)
+
+
+[Section] Solving Recurrences and Finding closed Form Recurrences
+    - are mathematical expression that define a sequence in terms of previous value in the sequence.
+
+        --- where the time complexity of an algo depends on the solution of a recurrence relation
+
+    - solving a recurrence means finding a closed form
+        - which explicit formula for the nth term without referencing previous terms
+            - this allows us to determine the time complexity directly without needing to compute every term of the recurrence
+
+    - consider the recurrence
+        f(n) = T(n-1) + 1
+
+        - this recurrence describes an algorithm where each step reduces the problem size by 1 and takes a constant amount of time to complete the current step
+    
+        - by substitution
+            T(n) = T(n-1) + 1
+
+            T(n-1), T(n-2)
+        - forward substitution
+
+        - T(n)  = T(n-1) + 1
+                = T(n-2) + 1 + 1
+                = T(n-3) + 1 + 1 + 1
+                = T(n-4) + 1 + 1 + 1 + 1]
+                ...
+                = T(1) + (n-1)
+            - since, T(1) is typically a base case with a known value, such as T(1) = 1
+                T(n) = 1 + (n-1) = n
+            - thus the closed form of the recurrence is:
+                T(n) = n
+                -- this means that the algo takes linear form O(n)
+
+- solution techniques for recurrences
+    - forward substitution
+        - this method involves 'repeatedly' expanding the recurrence step-by-step until the pattern is demonstrated in the simple term
+
+        - example: linear time
+        def linear_recursive(n):
+            if n == 1:
+                return 1
+            else:
+                return linear_recursive(n - 1) + 1
+
+        # Test the function
+        n = 5
+        print(f"Result for linear_recursive({n}):", linear_recursive(n))
+
+        - T(n) = T(n-1) + 1
+          T(n) = O(n)
+
+    - backward substitution
+        - we substitute the recurrence backward from the base case, this can be useful when recurrence involves 'bottom-up' computation, such divide-and-conquer algo
+
+        - consider the recurrence:
+            T(n) = T(n/2) + 1
+        - by backward substitution, we compute
+            T(n) = T(n/2) + 1
+            T(n/2) = T(n/4) + 1
+            T(n/4) = T(n/8) + 1
+            ...
+            - eventually, we reach T(1) and the sum of the number of steps is proportional to log n
+                T(n) = O(log n)
+        
+        - Strassen's Matrix Multiplication
+            T(n) = 7T(n/2) + O(n^2)
+
+            - using the master method
+                a = 7
+                b = 2
+                d = 2
+
+                - since, a > b^d, will fall on case 1
+                T(n) = 7T(n/2) + O(n^2)
+                T(n) = O(n^log27) = O(n^2.81)
+
+
+        - binary search
+            T(n) = 7T(n/2) + O(n^2)
+            T(n) = T(n/2) + O(1)
+            T(n) = O(log n)
+
+            def binary_search(arr, low, high, target):
+                if high >= low:
+                    mid = (low + high) // 2
+
+                    # Base case: target found
+                    if arr[mid] == target:
+                        return mid
+                    # Recur on the left half if target is smaller
+                    elif arr[mid] > target:
+                        return binary_search(arr, low, mid - 1, target)
+                    # Recur on the right half if target is larger
+                    else:
+                        return binary_search(arr, mid + 1, high, target)
+                else:
+                    return -1 # Target not found
+            
+            # Test the function
+            arr = [2, 3, 4, 10, 40]
+            target = 10
+            print(f"Index of {target}:", binary_search(arr, 0, len(arr) - 1, target))
+
+
+        - merge sort
+            T(n) = 7T(n/2) + O(n^2)
+        
+
+        def merge_sort(arr):
+            if len(arr) > 1:
+                #splitting phase
+                mid = len(arr) // 2
+                left_half = arr[:mid]
+                right_half = arr[mid:]
+
+                # Recursively sort both halves
+                #log n levels - decreases the size by half
+                merge_sort(left_half)
+                merge_sort(right_half)
+
+                # Merging the sorted halves
+                #this merging process goes through all n elements once at each level of the recursion
+                i = j = k = 0
+                while i < len(left_half) and j < len(right_half)
+                    if left_half[i] < right_half[j]:
+                        arr[k] = left_half[i]
+                        i += 1
+                    else:
+                        arr[k] = right_half[j]
+                        j += 1
+                    k += 1
+
+                # Check for any remaining elements
+                while i < len(left_half):
+                    arr[k] = left_half[i]
+                    i += 1
+                    k += 1
+                while j < len(right_half):
+                    arr[k] = right_half[j]
+                    j += 1
+                    k += 1
+                
+        # Test the function
+        arr = [12, 11, 13, 5, 6, 7]
+        merge_sort(arr)
+        print(f"Sorted array:", arr)
+
+- Time complexity
+T(n) = O(n)(work per level) x O(log n)(number of levels)
+     = O(n log n)
+
+    array = 8 elements
+    log2 8 = 3 levels
+
+    - recurrence tree
+
+- Class Participation
+    tree/computation log2 n = ?
+    Screen shot and send it to chatbox
+
+    1) 20 elements
+    2) 16 elements
+
+- Recurrence Tree
+    - it provides visual method for analyzing recurrences. We break the problem done into subproblems and sum up the work done at each level
+
+
+    - consider the recurrence:
+            T(n) = 2T(n/2) + O(n)
+            - at the top level, solve the problem in O(n) time
+            - at the next level, there are subproblems, each O(n/2), the work O(n)
+            - at the subsequent level, the number of subproblems doubles - O(n)
+        - since the tree has logn the work done is O(n log n)
+
+- Guess and Check
+    - this method involves the solution to the recurrence and providing it correct using mathematical induction
+
+    - consider the recurrence:
+        T(n) = 2T(n/2) + O(n)
+
+        -- T(n) = O(n log n)
+            n = 1
+            T(n) = 1 = O(1)
+        -- assume n/2
+            T(n/2) = O((n/2) log (n/2))
+        -- then
+            T(n) = 2T(n/2) + O(n)
+                 = 2O((n/2) log (n/2)) + O(n)
+            simplify:
+                T(n) = O(n log n)
+
+- Master Method
+    - it provides the shortcut for solving divide-and-conquer recurrences of the form:
+
+    - consider the recurrence:
+        T(n) = aT(n/b) + O(n^d)
+
+        where:
+            - a is the number of subproblems
+            - n/b is the size of each subproblem
+            - O(n^d) is the cost of dividing and combining the subproblems
+    - 3 cases to determine the time complexity based on the relationship between a, b and d
+
+        - case 1
+            if a > b^d, the time complexity is dominated by the subproblems
+            T(n) = O(n^logba)
+        - case 2
+            if a = b^d, the time complexity is dominated by the subproblems
+            T(n) = O(n^d log n)
+        - case 3
+            if a < b^d, the time complexity is dominated by the subproblems
+            T(n) = O(n^d)
