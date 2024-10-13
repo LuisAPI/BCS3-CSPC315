@@ -89,6 +89,8 @@ int main() {
     auto mergeSortTime = duration_cast<microseconds>(endMerge - startMerge).count();
 
     // Output Results
+    cout << "Data Size: " << dataSize << "\n" << endl;
+    
     cout << "Bubble Sort Time: " << bubbleSortTime << " microseconds" << endl;
     cout << "Merge Sort Time: " << mergeSortTime << " microseconds" << endl;
 
@@ -99,4 +101,3 @@ int main() {
 
     return 0;
 }
-
