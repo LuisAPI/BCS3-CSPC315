@@ -1,0 +1,77 @@
+Sorting Algorithm       worst-case      best-case           ave-case
+- selection sorting       O(n^2)          O(n^2)             O(n^2)
+- insertion sorting       O(n^2)          O(n^2)             O(n^2)
+- merge sorting         O(n log n)      O(n log n)          O(n log n)
+- quick sorting           O(n^2)        O(n log n)          O(n log n)
+
+- divide and conquer
+    - this is a paradigm that breaks a problem into a subproblem that are similar to the original problem, recursively solves the subproblems and finally combines the solutions to the subproblems to solve the original problem.
+
+        - divide
+            - the problem into a number of subproblems that are smaller instances of the same problem
+        - conquer
+            - the sub-problems by solving them recursively. If they are small enough, solve the subproblem as base case
+        - combine
+            - the solutions to the sub-problem into the solution for the original problem
+
+
+
+                                                problem
+                                                /     \
+                                      sub-problem     sub-problem       ] divide
+                                            |               |
+                                      solution to     solution to       ] conquer
+                                      sub-problem     sub-problem
+                                            \               /           ] combine
+                                        solution to the problem
+
+- merge sort
+        unsorted = [38, 27, 43, 10]
+        
+                        [38, 27, 43, 10]
+                             /    \
+                      [38, 27]    [43, 10]
+                        /   \       /   \
+                      [38] [27]   [43] [10]
+                          \           /
+                      [27, 38]    [10, 43]
+                           \         /
+                         [10, 27, 38, 43]
+Applications:
+    - merge sort
+        - one of the classic example of the divide and conquer sorting algo
+        - it breaks down the array small subarrays, sort them individually and then merges them to obtain the sorted way
+    - median finding
+        - the median of a set of numbers can be found using the divide and conquer approach. By recursively dividing the set into smaller subsets, the median can be determined efficiently
+    - min and max finding
+    - matrix multiplication
+
+- asymptotic symbol
+    - θ (Theta) and O (Big O)
+        - these are the symbols of asymptotic notation, a mathematical way to describe the running time or space requirements of an algo as the input size grows.
+            -- it represents the upper and lower bound on the growth functions
+
+Two methods of recurrences
+    - recursion-tree method
+        - this is a visual approach for solving recurrences. It works by representing the recurrence as a tree, where each node represents the amount of work done at a particular level, and the tree branches represent recursive call.
+        - the goal is to calculate the total work done at each level of the tree and then sum up all level for find the total work
+
+        - T(n) = 2T(n/2) + n
+        where:
+            - at the root level, the cost is n
+            - at the next level, there are 2 recursive calls, each of size n/2, contributing n/2 X 2 = n
+            - this pattern continues, with the problem size halving and the number of recursive calls doubling at each level
+            - summing the cost of each level to get the total running time. The total T(n) = O(n log n)
+
+    - master theorem(method)
+        - it is a shortcut used to solve recurrences
+        - T(n) = aT(n/b) + f(n)
+            - where:
+                - a >= 1 is the number of subproblem
+                    - number of recursive subproblems
+                - b > 1 is the factor by which the problem size is divided
+                    - factor by which the problem size is divided
+                - f(n) is the work done outside the recursive call
+                    - cost of the work done outside the recursive call
+        - T(n) = θ(n log n)
+            - 
